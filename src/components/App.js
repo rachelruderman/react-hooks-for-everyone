@@ -1,6 +1,7 @@
 import React, {useRef, createContext} from 'react';
 import {useTitleInput} from "../hooks/index";
 import Toggle from './Toggle';
+import Counter from './Counter';
 
 export const UserContext = createContext();
 
@@ -14,6 +15,7 @@ const App = () => {
             <div className="main-wrapper" ref={ref}>
                 <h1 onClick={onClick}>Level Up Dishes</h1>
                 <Toggle/>
+                <Counter/>
                 <form onSubmit={(e) => e.preventDefault()}>
                     <input type="text" value={name} onChange={(e) => setName(e.target.value)}/>
                 </form>
