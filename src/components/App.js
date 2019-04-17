@@ -1,5 +1,5 @@
 import React, {useRef, createContext} from 'react';
-import {useTitleInput} from "./hooks/index";
+import {useTitleInput} from "../hooks/index";
 import Toggle from './Toggle';
 
 export const UserContext = createContext();
