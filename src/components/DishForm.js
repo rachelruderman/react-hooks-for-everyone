@@ -6,7 +6,7 @@ export const DishForm = ({ setToggle }) => {
     useBodyScrollLock();
     
     const ref = useRef();
-    useOnClickOutside(ref, setToggle);
+    useOnClickOutside(ref, () => setToggle(false));
 
     return (
         <div className='dish-card' ref={ref}>
