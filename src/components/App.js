@@ -17,7 +17,9 @@ const App = () => {
 
     // every time this is mounted or rendered, it will fetch dishes again -- unless you specify second parameter
     // can put pieces of state in the array. Recommended to forget lifecycle methods and use react hooks instead
-    useEffect(fetchDishes, []);
+    useEffect( () => {
+        fetchDishes();
+     }, [name]);
 
     const ref                   = useRef();
     const onClick               = () => ref.current.classList.add('new-fake-class');
