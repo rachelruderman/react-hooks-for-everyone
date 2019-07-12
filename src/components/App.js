@@ -1,33 +1,24 @@
-import React, {useRef, useState, createContext, useMemo, useEffect} from 'react';
+import React, {useRef, createContext} from 'react';
 import {useTitleInput} from "../hooks/index";
 import Toggle from './Toggle';
 import Counter from './Counter';
+import useAbortableFetch from 'use-abortable-fetch';
 
 export const UserContext = createContext();
 
 const App = () => {
-    const [name, setName]       = useTitleInput('');
-    const [dishes, setDishes]   = useState([]);
-
-    const fetchDishes = async () => {
-        const res   = await fetch('https://my-json-server.typicode.com/leveluptuts/fakeapi/dishes');
-        const data  = await res.json();
-        setDishes(data);
-    };
-
-    // every time this is mounted or rendered, it will fetch dishes again -- unless you specify second parameter
-    // can put pieces of state in the array. Recommended to forget lifecycle methods and use react hooks instead
-    useEffect( () => {
-        fetchDishes();
-     }, [name]);
-
     const ref                   = useRef();
-    const onClick               = () => ref.current.classList.add('new-fake-class');
-    const reverseWord           = (word) => word.split('').reverse().join('');
-    const title                 = 'Level Up Dishes';
-    const titleReversed         = useMemo(() => reverseWord(title), [title]);
+    const [name, setName]       = useTitleInput('');
+    const { data }              = useAbortableFetch('https://my-json-server.typicode.com/leveluptuts/fakeapi/dishes')
 
-    const renderTitle           = () => <h1 onClick={onClick}>{titleReversed}</h1>;
+    if (!data) {
+        return null;
+    }
+
+    const onClick               = () => ref.current.classList.add('new-fake-class');
+    const title                 = 'Level Up Dishes';
+
+    const renderTitle           = () => <h1 onClick={onClick}>{title}</h1>;
     const renderToggle          = () => <Toggle/>;
     const renderCounter         = () => <Counter/>;
 
@@ -37,7 +28,7 @@ const App = () => {
         </form>
     );
 
-    const renderDishes = () => dishes.map(dish => {
+    const renderDishes = () => data.map(dish => {
         const {name, desc, ingredients} = dish;
         return (
             <article className='dish-card dish-card--withImage' key={name}>
