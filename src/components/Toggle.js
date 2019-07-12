@@ -14,7 +14,7 @@ const Toggle = () => {
             <button onClick={() => setToggle(!isToggled)}>
                 Toggle Me
             </button>
-            {isToggled && <DishForm/>}
+            {isToggled && <DishForm setToggle={setToggle} />}
         </div>
     )
 };
